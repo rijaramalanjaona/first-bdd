@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Abonne {
+public class Operation {
     private Long id;
-    private Adresse adressePrincipale;
-    private List<Contrat> contrats = new ArrayList<>();
+    private String canalConnexion;
+    private boolean sansDateEffet;
+    private Abonne abonneConcerne;
 }

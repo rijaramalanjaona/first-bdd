@@ -16,5 +16,5 @@ public class Adresse {
     private String codePostal;
     private String ville;
     private String pays;
-    private Date dateEffet;
+    private Date dateEffetModification;
 }
