@@ -13,6 +13,5 @@ import java.util.List;
 public class Abonne {
     private Long id;
     private Adresse adressePrincipale;
-    private Adresse adresseUlterieure;
     private List<Contrat> contrats = new ArrayList<>();
 }

@@ -42,6 +42,7 @@ public class Stepdefs {
        operation.setNom("modification_adresse_abonne");
        operation.setAbonneConcerne(abonne);
        operation.setSansDateEffet(AdresseHelper.sansDateEffet(condition));
+       abonneService.save(abonne);
     }
 
     @Alors("^l'adresse de l'abonné modifiée est enregistrée sur l'ensemble des contrats de l'abonné$")
