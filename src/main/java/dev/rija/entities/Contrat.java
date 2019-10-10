@@ -11,4 +11,5 @@ public class Contrat {
     private Long id;
     private Long idAbonne;
     private Adresse adresse;
+    private Adresse adresseUlterieure;
 }
