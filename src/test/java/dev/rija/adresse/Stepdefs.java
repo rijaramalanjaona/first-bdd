@@ -27,6 +27,7 @@ public class Stepdefs {
 
     @Lorsque("^le conseiller connecté à (.*) modifie l'adresse de l'abonné (.*)$")
     public void le_conseiller_connecté_à_canal_modifie_l_adresse_de_l_abonné_avec_condition(String canal, String condition) {
+       operation = new Operation();
        operation.setCanalConnexion(canal);
        operation.setAbonneConcerne(abonne);
        operation.setSansDateEffet(AdresseHelper.sansDateEffet(condition));
