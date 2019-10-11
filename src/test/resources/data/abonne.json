@@ -1,0 +1,39 @@
+{
+  "id": 1,
+  "adressePrincipale": {
+    "id": 1,
+    "rue": "rue",
+    "codePostal": "12345",
+    "ville": "ville",
+    "pays": "France",
+    "dateEffetModification": null,
+    "active": true
+  },
+  "contrats": [{
+    "id": 1,
+    "idAbonne": 1,
+    "adresse": {
+      "id": 1,
+      "rue": "rue",
+      "codePostal": "12345",
+      "ville": "ville",
+      "pays": "France",
+      "dateEffetModification": null,
+      "active": true
+    },
+    "adresseUlterieure": null
+  }, {
+    "id": 2,
+    "idAbonne": 1,
+    "adresse": {
+      "id": 2,
+      "rue": "rue",
+      "codePostal": "22222",
+      "ville": "ville2",
+      "pays": "France",
+      "dateEffetModification": null,
+      "active": false
+    },
+    "adresseUlterieure": null
+  }]
+}

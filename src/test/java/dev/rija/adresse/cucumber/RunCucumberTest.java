@@ -1,4 +1,4 @@
-package dev.rija.adresse;
+package dev.rija.adresse.cucumber;
 
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;

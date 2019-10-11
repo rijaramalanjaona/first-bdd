@@ -1,4 +1,4 @@
-package dev.rija.adresse;
+package dev.rija.adresse.cucumber;
 
 import dev.rija.entities.Abonne;
 import dev.rija.entities.Adresse;
@@ -7,7 +7,9 @@ import dev.rija.entities.Operation;
 import dev.rija.helpers.AdresseHelper;
 import dev.rija.services.AbonneService;
 import dev.rija.services.AbonneServiceImpl;
-import net.thucydides.core.annotations.Step;
+import io.cucumber.java.fr.Alors;
+import io.cucumber.java.fr.Etantdonné;
+import io.cucumber.java.fr.Lorsque;
 
 import java.util.List;
 
@@ -15,8 +17,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
-public class StepdefsWithSerenity {
-
+public class Stepdefs {
     private Operation operation;
     private Abonne abonne;
     private Adresse adressePrincipale;
@@ -25,7 +26,7 @@ public class StepdefsWithSerenity {
 
     private int nombreModification = 0;
 
-    @Step("^un abonné avec une adresse principale (.*) en (.*)$")
+    @Etantdonné("^un abonné avec une adresse principale (.*) en (.*)$")
     public void un_abonné_avec_une_adresse_principale_active_ou_inactive_dans_un_pays(String active, String pays) {
         abonne = new Abonne();
         adressePrincipale = new Adresse();
@@ -34,7 +35,7 @@ public class StepdefsWithSerenity {
         abonne.setAdressePrincipale(adressePrincipale);
     }
 
-    @Step("^le conseiller connecté à (.*) modifie l'adresse de l'abonné (.*)$")
+    @Lorsque("^le conseiller connecté à (.*) modifie l'adresse de l'abonné (.*)$")
     public void le_conseiller_connecté_à_canal_modifie_l_adresse_de_l_abonné_avec_condition(String canal, String condition) {
         operation = new Operation();
         operation.setCanalConnexion(canal);
@@ -45,7 +46,7 @@ public class StepdefsWithSerenity {
         nombreModification++;
     }
 
-    @Step("^l'adresse de l'abonné modifiée est enregistrée sur l'ensemble des contrats de l'abonné$")
+    @Alors("^l'adresse de l'abonné modifiée est enregistrée sur l'ensemble des contrats de l'abonné$")
     public void l_adresse_de_l_abonné_modifiée_est_enregistrée_sur_l_ensemble_des_contrats_de_l_abonné() {
         List<Contrat> contrats = abonne.getContrats();
         if (operation.isSansDateEffet()) {
@@ -62,8 +63,9 @@ public class StepdefsWithSerenity {
 
     }
 
-    @Step("^un mouvement de modification d'adresse est créé$")
+    @Alors("^un mouvement de modification d'adresse est créé$")
     public void un_mouvement_de_modification_d_adresse_est_créé() {
         assertTrue(nombreModification > 0);
     }
+
 }

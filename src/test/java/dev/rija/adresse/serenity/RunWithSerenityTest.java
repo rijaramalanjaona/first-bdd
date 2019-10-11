@@ -1,4 +1,4 @@
-package dev.rija.adresse;
+package dev.rija.adresse.serenity;
 
 import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.core.annotations.Steps;
