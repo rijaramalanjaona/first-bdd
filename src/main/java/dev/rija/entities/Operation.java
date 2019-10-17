@@ -13,7 +13,7 @@ public class Operation {
     private Long id;
     private String canalConnexion;
     private boolean sansDateEffet;
-    private Abonne abonneConcerne;
+    private Long idAbonne;
     private String nom;
     private Date date;
 }

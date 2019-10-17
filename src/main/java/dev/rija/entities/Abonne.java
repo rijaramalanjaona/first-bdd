@@ -14,4 +14,5 @@ public class Abonne {
     private Long id;
     private Adresse adressePrincipale;
     private List<Contrat> contrats = new ArrayList<>();
+    private List<Archive> archives = new ArrayList<>();
 }

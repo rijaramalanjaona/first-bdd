@@ -1,12 +1,11 @@
 package dev.rija.adresse.cucumber;
 
-import dev.rija.entities.Abonne;
-import dev.rija.entities.Adresse;
-import dev.rija.entities.Contrat;
-import dev.rija.entities.Operation;
+import dev.rija.entities.*;
 import dev.rija.helpers.AdresseHelper;
 import dev.rija.services.AbonneService;
 import dev.rija.services.AbonneServiceImpl;
+import dev.rija.services.OperationService;
+import dev.rija.services.OperationServiceImpl;
 import io.cucumber.java.fr.Alors;
 import io.cucumber.java.fr.Etantdonné;
 import io.cucumber.java.fr.Lorsque;
@@ -15,16 +14,17 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 public class Stepdefs {
+    // TODO utiliser TestNg dans les assertions
     private Operation operation;
     private Abonne abonne;
     private Adresse adressePrincipale;
+    private List<Contrat> contrats;
+    private List<Archive> archives;
 
     private AbonneService abonneService = new AbonneServiceImpl();
-
-    private int nombreModification = 0;
+    private OperationService operationService = new OperationServiceImpl();
 
     @Etantdonné("^un abonné avec une adresse principale (.*) en (.*)$")
     public void un_abonné_avec_une_adresse_principale_active_ou_inactive_dans_un_pays(String active, String pays) {
@@ -40,32 +40,44 @@ public class Stepdefs {
         operation = new Operation();
         operation.setCanalConnexion(canal);
         operation.setNom("modification_adresse_abonne");
-        operation.setAbonneConcerne(abonne);
+        operation.setIdAbonne(abonne.getId());
         operation.setSansDateEffet(AdresseHelper.sansDateEffet(condition));
+        operationService.save(operation);
+
+        // modification adresse
         abonneService.save(abonne);
-        nombreModification++;
+
+        // modification adresse dans les contrats
+        if (operation.isSansDateEffet()) {
+            abonneService.modifierAdresseContratsSansDateEffet(abonne, adressePrincipale);
+        } else {
+            abonneService.modifierAdresseContratsAvecDateEffet(abonne, adressePrincipale);
+        }
+
+        // modification adresse dans les archives
+        abonneService.modifierArchives(abonne, adressePrincipale);
     }
 
     @Alors("^l'adresse de l'abonné modifiée est enregistrée sur l'ensemble des contrats de l'abonné$")
     public void l_adresse_de_l_abonné_modifiée_est_enregistrée_sur_l_ensemble_des_contrats_de_l_abonné() {
-        List<Contrat> contrats = abonne.getContrats();
+        contrats = abonne.getContrats();
         if (operation.isSansDateEffet()) {
-            nombreModification += abonneService.modifierAdresseContratsSansDateEffet(abonne, adressePrincipale);
             for (Contrat contrat: contrats) {
                 assertThat(contrat.getAdresse(), is(adressePrincipale));
             }
         } else {
-            nombreModification += abonneService.modifierAdresseContratsAvecDateEffet(abonne, adressePrincipale);
             for (Contrat contrat: contrats) {
                 assertThat(contrat.getAdresseUlterieure(), is(adressePrincipale));
             }
         }
-
     }
 
     @Alors("^un mouvement de modification d'adresse est créé$")
     public void un_mouvement_de_modification_d_adresse_est_créé() {
-        assertTrue(nombreModification > 0);
+        archives = abonne.getArchives();
+        for (Archive archive: archives) {
+            assertThat(archive.getAdresse(), is(adressePrincipale));
+        }
     }
 
 }
