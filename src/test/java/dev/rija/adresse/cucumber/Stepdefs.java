@@ -1,14 +1,14 @@
 package dev.rija.adresse.cucumber;
 
+import cucumber.api.java.fr.Alors;
+import cucumber.api.java.fr.Etantdonné;
+import cucumber.api.java.fr.Lorsque;
 import dev.rija.entities.*;
 import dev.rija.helpers.AdresseHelper;
 import dev.rija.services.AbonneService;
 import dev.rija.services.AbonneServiceImpl;
 import dev.rija.services.OperationService;
 import dev.rija.services.OperationServiceImpl;
-import io.cucumber.java.fr.Alors;
-import io.cucumber.java.fr.Etantdonné;
-import io.cucumber.java.fr.Lorsque;
 
 import java.util.List;
 

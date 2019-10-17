@@ -2,6 +2,9 @@ package dev.rija.adresse.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import cucumber.api.java.fr.Alors;
+import cucumber.api.java.fr.Etantdonné;
+import cucumber.api.java.fr.Lorsque;
 import dev.rija.entities.Abonne;
 import dev.rija.entities.Adresse;
 import dev.rija.entities.Contrat;
@@ -9,9 +12,6 @@ import dev.rija.entities.Operation;
 import dev.rija.helpers.AdresseHelper;
 import dev.rija.services.AbonneService;
 import dev.rija.services.AbonneServiceImpl;
-import io.cucumber.java.fr.Alors;
-import io.cucumber.java.fr.Etantdonné;
-import io.cucumber.java.fr.Lorsque;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -53,6 +53,8 @@ public class Stepdefs {
         wireMockServer.start();
 
         // simuler l'appel GET de l'API /abonne/1
+        // TODO appel rest dynamique - creer vraiement la class REST et tester avec les mocks a part mais pas dans les steps ici
+        // /abonne/:id idem pour post connexion, idem put /abonne/:id
         configureFor("localhost", wireMockServer.port());
         stubFor(get(urlEqualTo("/abonne/1"))
                 .withHeader("accept", equalTo("application/json"))
@@ -83,7 +85,7 @@ public class Stepdefs {
         operation = new Operation();
         operation.setCanalConnexion(canal);
         operation.setNom("modification_adresse_abonne");
-        operation.setAbonneConcerne(abonne);
+        operation.setIdAbonne(abonne.getId());
         operation.setSansDateEffet(AdresseHelper.sansDateEffet(condition));
 
         // simuler l'appel PUT de l'API /abonne/1
@@ -114,12 +116,12 @@ public class Stepdefs {
     public void l_adresse_de_l_abonné_modifiée_est_enregistrée_sur_l_ensemble_des_contrats_de_l_abonné() {
         List<Contrat> contrats = abonne.getContrats();
         if (operation.isSansDateEffet()) {
-            nombreModification += abonneService.modifierAdresseContratsSansDateEffet(abonne, adressePrincipale);
+            abonneService.modifierAdresseContratsSansDateEffet(abonne, adressePrincipale);
             for (Contrat contrat: contrats) {
                 assertThat(contrat.getAdresse(), is(adressePrincipale));
             }
         } else {
-            nombreModification += abonneService.modifierAdresseContratsAvecDateEffet(abonne, adressePrincipale);
+            abonneService.modifierAdresseContratsAvecDateEffet(abonne, adressePrincipale);
             for (Contrat contrat: contrats) {
                 assertThat(contrat.getAdresseUlterieure(), is(adressePrincipale));
             }

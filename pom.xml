@@ -16,6 +16,13 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <cucumber.version>4.2.0</cucumber.version>
+        <serenity.version>2.0.39</serenity.version>
+        <serenity.cucumber4.version>1.0.5</serenity.cucumber4.version>
+        <jackson.version>2.9.6</jackson.version>
+        <junit.version>4.12</junit.version>
+        <wiremock.version>2.25.0</wiremock.version>
+        <commons.io.version>2.6</commons.io.version>
     </properties>
 
     <dependencies>
@@ -30,73 +37,83 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+        <!-- cucumber et serenity -->
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-core</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>cucumber-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-screenplay</artifactId>
+            <version>${serenity.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.cucumber</groupId>
+                    <artifactId>cucumber-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>net.serenity-bdd</groupId>
+            <artifactId>serenity-cucumber4</artifactId>
+            <version>${serenity.cucumber4.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>4.7.4</version>
+            <version>${cucumber.version}</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>4.7.4</version>
-            <scope>test</scope>
+            <version>${cucumber.version}</version>
         </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-testng</artifactId>
-            <version>4.7.4</version>
-        </dependency>
+        <!-- cucumber et serenity -->
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- serenity -->
-        <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-core</artifactId>
-            <version>1.2.5-rc.11</version>
-        </dependency>
-        <dependency>
-            <groupId>net.serenity-bdd</groupId>
-            <artifactId>serenity-junit</artifactId>
-            <version>1.2.5-rc.11</version>
         </dependency>
 
         <!-- jackson -->
         <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
-        <version>2.9.6</version>
+        <version>${jackson.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.6</version>
+            <version>${jackson.version}</version>
         </dependency>
+        <!-- jackson -->
 
         <!-- wiremock -->
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock-jre8</artifactId>
-            <version>2.25.0</version>
+            <version>${wiremock.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- wiremock -->
 
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>${commons.io.version}</version>
         </dependency>
 
         <dependency>
@@ -111,30 +128,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>net.serenity-bdd.maven.plugins</groupId>
-                <artifactId>serenity-maven-plugin</artifactId>
-                <version>1.2.5-rc.6</version>
-                <executions>
-                    <execution>
-                        <id>serenity-reports</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>aggregate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20</version>
-                <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
-                </configuration>
             </plugin>
         </plugins>
     </build>
