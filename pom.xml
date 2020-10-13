@@ -20,7 +20,7 @@
         <serenity.version>2.0.39</serenity.version>
         <serenity.cucumber4.version>1.0.5</serenity.cucumber4.version>
         <jackson.version>2.9.6</jackson.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <wiremock.version>2.25.0</wiremock.version>
         <commons.io.version>2.6</commons.io.version>
     </properties>
